@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="/Users/jamestonkin/NSS/SQL/music-history-exercise-sql/musichistory.db"/><window><current_tab id="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="2760"/><expanded_item id="0" parent="-1"/><expanded_item id="0" parent="0"/><expanded_item id="1" parent="-1"/><expanded_item id="2" parent="-1"/><expanded_item id="3" parent="-1"/></tab_structure><tab_browse><current_table name=""/><default_encoding codec=""/><browsetable_info data="AAAAAA=="/></tab_browse><tab_sql><sql name="music-history.sql">/* Music History SQL Exercise*/
+
+/* 1 */
+SELECT * FROM Genre;
+
+/* 2 */
+SELECT * FROM Artist;
+INSERT INTO Artist VALUES (null, &quot;Jefferson Airplane&quot;, 1965);
+
+/* 3 */
+SELECT * FROM Album;
+INSERT INTO Album VALUES (null, &quot;Surrealistic Pillow&quot;, &quot;2/1/1967&quot;, 2088, &quot;RCA Victor&quot;, 28, 2);
+
+/* 4 */
+SELECT * FROM Song;
+INSERT INTO Song VALUES (null, &quot;White Rabbit&quot;, 152, &quot;6/24/1967&quot;, 2, 28, 23);
+INSERT INTO Song VALUES (null, &quot;Somebody To Love&quot;, 180, &quot;4/01/1967&quot;, 2, 28, 23);
+
+/* 5. Write a SELECT query that provides the song titles, album title, and artist name
+for all of the data you just entered in. Use the LEFT JOIN keyword sequence to connect the tables,
+and the WHERE keyword to filter the results to the album and artist you added. */
+
+SELECT s.Title, a.Title, ar.ArtistName 
+FROM Song s 
+LEFT JOIN Album a ON s.AlbumId = a.AlbumId
+LEFT JOIN Artist ar ON ar.ArtistId = a.ArtistID
+WHERE a.Title = &quot;Surrealistic Pillow&quot;
+
+/* 6 Write a SELECT statement to display how many songs exist for each album.
+You'll need to use the COUNT() function and the GROUP BY keyword sequence. */
+
+SELECT COUNT (s.Title) NumberOfSongsOnAlbum, a.Title
+FROM Album a, Song s
+WHERE a.AlbumId = s.AlbumId
+GROUP BY a.Title;
+
+/* 7. Write a SELECT statement to display how many songs exist for each artist.
+You'll need to use the COUNT() function and the GROUP BY keyword sequence. */
+
+SELECT COUNT (s.Title) NumberOfSongsByArtist, ar.ArtistName
+FROM Artist ar, Song s
+WHERE ar.ArtistId = s.ArtistId
+GROUP BY ar.ArtistName;
+
+/* 8. Write a SELECT statement to display how many songs exist for each genre.
+You'll need to use the COUNT() function and the GROUP BY keyword sequence. */
+
+SELECT COUNT (s.Title) NumberOfSongsByGenre, g.Label
+FROM Genre g, Song s
+WHERE s.GenreId = g.GenreId
+GROUP BY g.Label;
+
+/* 9. Using MAX() function, write a select statement to find the album with the longest duration.
+The result should display the album title and the duration. */
+
+SELECT MAX (a.AlbumLength) LengthOfLongestAlbum, a.Title
+FROM Album a;
+
+/* 10. Using MAX() function, write a select statement to find the song with the longest duration.
+The result should display the song title and the duration. */
+
+SELECT MAX (s.SongLength) LengthOfLongestSong, s.Title
+FROM Song s;
+
+/* 11. Modify the previous query to also display the title of the album.*/
+
+SELECT MAX (s.SongLength) LengthOfLongestSong, s.Title, a.Title
+FROM Song s, Album a;</sql><current_tab id="0"/></tab_sql></sqlb_project>
